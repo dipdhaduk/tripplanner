@@ -19,7 +19,17 @@ export default function Admin(){
       ]);
       setStats(s.data.data.stats);setUsers(u.data.data.users);setTrips(t.data.data.trips);setReviews(rv.data.data.reviews);setMessages(msg.data.data.messages);
       setUserPages(u.data.data.pagination.pages);setTripPages(t.data.data.pagination.pages);setAdminId(m.data.data.user.id);setError('');
-    }catch(e){setError(e.response?.data?.message||'Unable to load admin data.');}
+    }catch(e){
+      if (e.response?.status === 401) {
+        window.location.href = '/login';
+        return;
+      }
+      if (e.response?.status === 403) {
+        window.location.href = '/dashboard';
+        return;
+      }
+      setError(e.response?.data?.message||'Unable to load admin data.');
+    }
     finally{setLoading(false);}
   },[userPage,tripPage]);
   useEffect(()=>{load();},[load]);

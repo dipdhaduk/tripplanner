@@ -61,7 +61,7 @@ export default function Navbar() {
     } finally {
       setUser(null);
       setOpen(false);
-      router.push('/login');
+      window.location.href = '/login';
     }
   }
 
